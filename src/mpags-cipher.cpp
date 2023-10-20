@@ -5,12 +5,12 @@
 
 //Transliteration function
 std::string transliteration(const char in_char);
+bool processCommandLine(const std::vector<std::string>& args, bool& helpRequested, bool& versionRequested, std::string& inputFileName, std::string& outputFileName);
 
 int main(int argc, char* argv[])
 {
     // Convert the command-line arguments into a more easily usable form
     const std::vector<std::string> cmdLineArgs{argv, argv + argc};
-    const std::size_t nCmdLineArgs{cmdLineArgs.size()};
 
     // Options that might be set by the command-line arguments THIS IS TEST
     bool helpRequested{false};
@@ -18,47 +18,9 @@ int main(int argc, char* argv[])
     std::string inputFile{""};
     std::string outputFile{""};
 
-    // Process command line arguments - ignore zeroth element, as we know this
-    // to be the program name and don't need to worry about it
-    for (std::size_t i{1}; i < nCmdLineArgs; ++i) {
-        if (cmdLineArgs[i] == "-h" || cmdLineArgs[i] == "--help") {
-            helpRequested = true;
-        } else if (cmdLineArgs[i] == "--version") {
-            versionRequested = true;
-        } else if (cmdLineArgs[i] == "-i") {
-            // Handle input file option
-            // Next element is filename unless "-i" is the last argument
-            if (i == nCmdLineArgs - 1) {
-                std::cerr << "[error] -i requires a filename argument"
-                          << std::endl;
-                // exit main with non-zero return to indicate failure
-                return 1;
-            } else {
-                // Got filename, so assign value and advance past it
-                inputFile = cmdLineArgs[i + 1];
-                ++i;
-            }
-        } else if (cmdLineArgs[i] == "-o") {
-            // Handle output file option
-            // Next element is filename unless "-o" is the last argument
-            if (i == nCmdLineArgs - 1) {
-                std::cerr << "[error] -o requires a filename argument"
-                          << std::endl;
-                // exit main with non-zero return to indicate failure
-                return 1;
-            } else {
-                // Got filename, so assign value and advance past it
-                outputFile = cmdLineArgs[i + 1];
-                ++i;
-            }
-        } else {
-            // Have an unknown flag to output error message and return non-zero
-            // exit status to indicate failure
-            std::cerr << "[error] unknown argument '" << cmdLineArgs[i]
-                      << "'\n";
-            return 1;
-        }
-    }
+    //Implement COMMAND LINE ARGUMENT FUNCTION HERE
+    bool correct_parsing{false};
+    correct_parsing = processCommandLine(cmdLineArgs, helpRequested, versionRequested, inputFile, outputFile);
 
     // Handle help, if requested
     if (helpRequested) {
@@ -116,6 +78,47 @@ int main(int argc, char* argv[])
     // No requirement to return from main, but we do so for clarity and consistency
     return 0;
 }
+//=====================================================================================================================================================================================
+//                                      FUNCTION DEFINITIONS BELOW
+//=====================================================================================================================================================================================
+bool processCommandLine( //True/False instructs program whether to continue, other values are edited within the function
+    const std::vector<std::string>& args, 
+    bool& helpRequested, 
+    bool& versionRequested, 
+    std::string& inputFileName, 
+    std::string& outputFileName
+    ) {
+        const std::size_t num_args{args.size()};
+        for (std::size_t i{1}; i < num_args; ++i) {
+            if (args[i] == "-h" || args[i] == "--help") {helpRequested = true;}
+            else if (args[i] == "--version") {versionRequested = true;}
+            else if (args[i] == "-i") { //input file handling
+                // Next element is filename unless "-i" is the last argument
+                if (i == num_args - 1) {
+                    std::cerr << "[error] -i requires a filename argument" << std::endl;
+                    return 1; // exit main with non-zero return to indicate failure
+                } else {
+                    inputFileName = args[i + 1]; // Got filename, so assign value and advance past it
+                    ++i;
+                }
+            }
+            else if (args[i] == "-o") { // Handle output file option
+                // Next element is filename unless "-o" is the last argument
+                if (i == num_args - 1) {
+                    std::cerr << "[error] -o requires a filename argument" << std::endl;
+                    return 1; // exit main with non-zero return to indicate failure
+                } else {
+                    outputFileName = args[i + 1]; // Got filename, so assign value and advance past it
+                    ++i;
+                }
+            } else { // Have an unknown flag to output error message and return non-zero
+                std::cerr << "[error] unknown argument '" << args[i] << "'\n"; // exit status to indicate failure
+                return 1;
+            }
+        }
+    return true;
+    }
+
 
 std::string transliteration(const char in_char) { //Transliterates numbers and capitalizes
     std::string return_string{};
