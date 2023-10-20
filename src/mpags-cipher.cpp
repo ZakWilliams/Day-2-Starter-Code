@@ -9,7 +9,7 @@ int main(int argc, char* argv[])
     const std::vector<std::string> cmdLineArgs{argv, argv + argc};
     const std::size_t nCmdLineArgs{cmdLineArgs.size()};
 
-    // Options that might be set by the command-line arguments
+    // Options that might be set by the command-line arguments THIS IS TEST
     bool helpRequested{false};
     bool versionRequested{false};
     std::string inputFile{""};
