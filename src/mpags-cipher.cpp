@@ -96,7 +96,7 @@ bool processCommandLine( //True/False instructs program whether to continue, oth
                 // Next element is filename unless "-i" is the last argument
                 if (i == num_args - 1) {
                     std::cerr << "[error] -i requires a filename argument" << std::endl;
-                    return 1; // exit main with non-zero return to indicate failure
+                    return false; // exit main with non-zero return to indicate failure
                 } else {
                     inputFileName = args[i + 1]; // Got filename, so assign value and advance past it
                     ++i;
@@ -106,14 +106,14 @@ bool processCommandLine( //True/False instructs program whether to continue, oth
                 // Next element is filename unless "-o" is the last argument
                 if (i == num_args - 1) {
                     std::cerr << "[error] -o requires a filename argument" << std::endl;
-                    return 1; // exit main with non-zero return to indicate failure
+                    return false; // exit main with non-zero return to indicate failure
                 } else {
                     outputFileName = args[i + 1]; // Got filename, so assign value and advance past it
                     ++i;
                 }
             } else { // Have an unknown flag to output error message and return non-zero
                 std::cerr << "[error] unknown argument '" << args[i] << "'\n"; // exit status to indicate failure
-                return 1;
+                return false;
             }
         }
     return true;
