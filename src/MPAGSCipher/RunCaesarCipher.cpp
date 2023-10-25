@@ -6,6 +6,15 @@ std::string runCaesarCipher(
     const bool encrypt) {
         std::string outputText{""};
         const char alpha_container[26]{'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
+
+        for (char character : inputText) {
+            if (encrypt) { //if in encryption mode
+
+            }
+            if  (!encrypt) { //if in decryption mode
+
+            }
+        }
         //Loop over input text
             //For each character, find correct character in alphabet container
             //add character to output strign
