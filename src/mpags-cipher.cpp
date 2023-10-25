@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <fstream>
 
 //Student created project headers
 #include "MPAGSCipher/TransformChar.hpp"
@@ -21,7 +22,7 @@ int main(int argc, char* argv[])
     //Implement COMMAND LINE ARGUMENT FUNCTION HERE
     bool correct_parsing{false};
     correct_parsing = processCommandLine(cmdLineArgs, helpRequested, versionRequested, inputFile, outputFile);
-    if (!correct_parsing) {return 1;}
+    if (!correct_parsing) {std::cout <<"ERR: issue in command line reading. \nExiting...\nExiting...\nExiting..."<< std::endl;return 1;} //This acts
 
     // Handle help, if requested
     if (helpRequested) {
@@ -69,12 +70,10 @@ int main(int argc, char* argv[])
 
     // Warn that output file option not yet implemented
     if (!outputFile.empty()) {
-        std::cerr << "[warning] output to file ('" << outputFile
-                  << "') not implemented yet, using stdout\n";
-    }
-
-    // Print out the transliterated text
-    std::cout << inputText << std::endl;
+        std::ofstream out_file{outputFile};
+        bool ok_to_write{out_file.good()};
+        if (ok_to_write) {out_file << inputText;}
+    } else {std::cout << "\nNo output file optionality detected, printing enciphered result in terminal:\n" << inputText << "\n" << std::endl;} //Print transliterated text if no output file
 
     // No requirement to return from main, but we do so for clarity and consistency.
     return 0;
