@@ -75,7 +75,7 @@ int main(int argc, char* argv[])
     // Print out the transliterated text
     std::cout << inputText << std::endl;
 
-    // No requirement to return from main, but we do so for clarity and consistency
+    // No requirement to return from main, but we do so for clarity and consistency.
     return 0;
 }
 //=====================================================================================================================================================================================
