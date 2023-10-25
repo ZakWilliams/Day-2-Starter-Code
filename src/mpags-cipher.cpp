@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-//Transliteration function
+//Function declarations - these act to inform the comiler about the existance of functions before the function is seen in the main(){} function
 std::string transliteration(const char in_char);
 bool processCommandLine(const std::vector<std::string>& args, bool& helpRequested, bool& versionRequested, std::string& inputFileName, std::string& outputFileName);
 
@@ -21,6 +21,7 @@ int main(int argc, char* argv[])
     //Implement COMMAND LINE ARGUMENT FUNCTION HERE
     bool correct_parsing{false};
     correct_parsing = processCommandLine(cmdLineArgs, helpRequested, versionRequested, inputFile, outputFile);
+    if (!correct_parsing) {return 1;}
 
     // Handle help, if requested
     if (helpRequested) {
