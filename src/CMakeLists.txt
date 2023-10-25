@@ -14,8 +14,9 @@ set(CMAKE_CXX_STANDARD 14)
 #Declare build of mapgs-cipher main program
 add_executable(mpags-cipher
     mpags-cipher.cpp
-    MPAGSCipher/TransformChar.cpp
     MPAGSCipher/ProcessCommandLine.cpp
+    MPAGSCipher/TransformChar.cpp
+    MPAGSCipher/RunCaesarCipher.cpp
     )
 
 #Using standard set of flags

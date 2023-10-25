@@ -53,31 +53,34 @@ int main(int argc, char* argv[])
 
     // Initialise variables
     char inputChar{'x'};
-    std::string inputText;
+    std::string inputText{""};
+    std::string outputText{""};
 
     // Read in user input from stdin/file
     // Warn that input file option not yet implemented
     if (!inputFile.empty()) {
         std::ifstream in_file{inputFile};
         bool ok_to_read{in_file.good()};
-        if (ok_to_read) {in_file >> inputChar;
+        if (ok_to_read) {in_file >> inputText; //Read inputText from file
         in_file.close();
         } else {std::cout << "ERR: issue with input file reading. \nExiting...\nExiting...\nExiting..." << std::endl; return 1;}
-    } else {std::cout << "\nNo output file optionality detected, taking input from terminal (after submitting text for enciphering, press CTRL + D):\n" << std::endl;}
-
-    // loop over each character from user input - adding transliterated alphanumerics and ignoring else
-    while (std::cin >> inputChar) {
-        inputText += transformChar(inputChar);      
+    } else {
+        std::cout << "\nNo output file optionality detected, taking input from terminal (after submitting text for enciphering, press CTRL + D):\n" << std::endl;
+        while (std::cin >> inputChar) {inputText += inputChar;}
     }
+
+    //Loop over and transliterate inputText into outputText
+    for (char character : inputText) {outputText += transformChar(character);}
 
     // Warn that output file option not yet implemented
     if (!outputFile.empty()) {
         std::ofstream out_file{outputFile};
         bool ok_to_write{out_file.good()};
-        if (ok_to_write) {out_file << inputText;
-        out_file.close();
+        if (ok_to_write) {std::cout << "Saving as " << outputFile << " ..." <<std::endl;
+            out_file << outputText;
+            out_file.close();
         } else {std::cout << "ERR: issue with output file reading. \nExiting...\nExiting...\nExiting..." << std::endl; return 1;} 
-    } else {std::cout << "\nNo output file optionality detected, printing enciphered result in terminal:\n" << inputText << "\n" << std::endl;} //Print transliterated text if no output file
+    } else {std::cout << "\nNo output file optionality detected, printing enciphered result in terminal:\n" << outputText << "\n" << std::endl;} //Print transliterated text if no output file
 
     // No requirement to return from main, but we do so for clarity and consistency.
     return 0;
