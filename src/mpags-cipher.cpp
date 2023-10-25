@@ -1,10 +1,12 @@
-#include <cctype>
+//Standard sourced libraries
 #include <iostream>
 #include <string>
 #include <vector>
 
+//Student created project headers
+#include "MPAGSCipher/TransformChar.cpp"
+
 //Function declarations - these act to inform the comiler about the existance of functions before the function is seen in the main(){} function
-std::string transliteration(const char in_char);
 bool processCommandLine(const std::vector<std::string>& args, bool& helpRequested, bool& versionRequested, std::string& inputFileName, std::string& outputFileName);
 
 int main(int argc, char* argv[])
@@ -119,48 +121,3 @@ bool processCommandLine( //True/False instructs program whether to continue, oth
         }
     return true;
     }
-
-
-std::string transliteration(const char in_char) { //Transliterates numbers and capitalizes
-    std::string return_string{};
-    if (std::isalpha(in_char)) {
-        return_string = std::toupper(in_char);
-    }
-
-    // Transliterate digits to English words
-    if (std::isdigit(in_char)) {
-        switch (in_char) {
-            case '0':
-                return_string = "ZERO";
-                break;
-            case '1':
-                return_string = "ONE";
-                break;
-            case '2':
-                return_string = "TWO";
-                break;
-            case '3':
-                return_string = "THREE";
-                break;
-            case '4':
-                return_string = "FOUR";
-            break;
-            case '5':
-                return_string = "FIVE";
-                break;
-            case '6':
-                return_string = "SIX";
-                break;
-            case '7':
-                return_string = "SEVEN";
-                break;
-            case '8':
-                return_string = "EIGHT";
-                break;
-            case '9':
-                return_string = "NINE";
-                break;
-        }
-    }
-    return return_string;
-}
