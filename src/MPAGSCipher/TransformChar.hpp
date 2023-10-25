@@ -4,6 +4,6 @@
 #include <string>
 
 //Transliterate char to string
-std::string transliteration(const char in_char);
+std::string transformChar(const char in_char);
 
-#endif //MPAGSCIPHER_TRANSFORMCHAR_HPP
+#endif ///MPAGSCIPHER_TRANSFORMCHAR_HPP

@@ -1,6 +1,6 @@
 #include <string>
 
-std::string transliteration(const char in_char) { //Transliterates numbers and capitalizes
+std::string transformChar(const char in_char) { //Transliterates numbers into text and capitalises all words
     std::string return_string{};
     if (std::isalpha(in_char)) {
         return_string = std::toupper(in_char);
