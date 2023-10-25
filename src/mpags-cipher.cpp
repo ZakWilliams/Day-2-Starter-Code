@@ -58,21 +58,25 @@ int main(int argc, char* argv[])
     // Read in user input from stdin/file
     // Warn that input file option not yet implemented
     if (!inputFile.empty()) {
-        std::cerr << "[warning] input from file ('" << inputFile
-                  << "') not implemented yet, using stdin\n";
-    }
+        std::ifstream in_file{inputFile};
+        bool ok_to_read{in_file.good()};
+        if (ok_to_read) {in_file >> inputChar;
+        in_file.close();
+        } else {std::cout << "ERR: issue with input file reading. \nExiting...\nExiting...\nExiting..." << std::endl; return 1;}
+    } else {std::cout << "\nNo output file optionality detected, taking input from terminal (after submitting text for enciphering, press CTRL + D):\n" << std::endl;}
 
-    // loop over each character from user input
+    // loop over each character from user input - adding transliterated alphanumerics and ignoring else
     while (std::cin >> inputChar) {
         inputText += transformChar(inputChar);      
-        // If the character isn't alphabetic or numeric, DONT add it
     }
 
     // Warn that output file option not yet implemented
     if (!outputFile.empty()) {
         std::ofstream out_file{outputFile};
         bool ok_to_write{out_file.good()};
-        if (ok_to_write) {out_file << inputText;}
+        if (ok_to_write) {out_file << inputText;
+        out_file.close();
+        } else {std::cout << "ERR: issue with output file reading. \nExiting...\nExiting...\nExiting..." << std::endl; return 1;} 
     } else {std::cout << "\nNo output file optionality detected, printing enciphered result in terminal:\n" << inputText << "\n" << std::endl;} //Print transliterated text if no output file
 
     // No requirement to return from main, but we do so for clarity and consistency.
